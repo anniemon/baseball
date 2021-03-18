@@ -10,3 +10,17 @@ h1 {
   text-align: center;
   font-size: 72px;
 }
+section {
+  text-align: center;
+  padding: 50px;
+}
+button {
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 30px;
+  cursor: pointer;
+  background-color:cornflowerblue;
+  border: 2px solid gray;
+}
