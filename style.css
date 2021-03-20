@@ -23,3 +23,12 @@ button {
   background-color:cornflowerblue;
   border: 2px solid gray;
 }
+form {
+  text-align: center;
+}
+input {
+  width: 230px;
+  font-size: 30px;
+  background-color:transparent;
+  text-align: center;
+}
