@@ -2,18 +2,24 @@ const startBtn = document.querySelector("button"),
     form = document.querySelector(".js-numberForm"),
     input = form.querySelector("input");
 
+const ANSWER_LS = "answer";
+
 function generateNumber(){
     let result = '';
    for (var i=0; i<3; i++){
        result += Math.floor(Math.random()*10);
    }
-   return result;
+   console.log(result);
+   saveNumber(result);
+}
+
+function saveNumber(text){
+    localStorage.setItem(ANSWER_LS, text);
 }
 
 function handleSubmit (){
     const currentValue = input.value;
-    const answer = generateNumber();
-    console.log(answer);
+    const answer = localStorage.getItem(ANSWER_LS);
     if (currentValue.length !== 3){
         alert("세 자릿수를 입력하세요.");
     }
