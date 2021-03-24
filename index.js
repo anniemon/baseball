@@ -15,6 +15,7 @@ function generateNumber(){
    }
    console.log(result);
    saveNumber(result);
+   ballStrike.innerText = '🟡🟡🟡';
 }
 
 function saveNumber(text){
@@ -23,7 +24,6 @@ function saveNumber(text){
 
 function handleSubmit (event){
     event.preventDefault();
-    countSubmit();
     const currentValue = input.value;
     if (currentValue.length !== 3){
         alert("세 자릿수를 입력하세요.");
@@ -34,6 +34,7 @@ function handleSubmit (event){
         compareNumber(currentValue);
         paintballStrike();
     }
+    countSubmit();
 }
 
  function comparedigit(currentValue){
@@ -65,24 +66,40 @@ function handleSubmit (event){
 
 function compareNumber(currentValue){
     const answer = localStorage.getItem(ANSWER_LS);
-    if (currentValue.includes(answer.charAt(0))
-    && currentValue.includes(answer.charAt(1))
-    && currentValue.includes(answer.charAt(2))){
+    if (
+        answer.includes(currentValue.charAt(0))
+    && answer.includes(currentValue.charAt(1))
+    && answer.includes(currentValue.charAt(2))
+    && (currentValue.charAt(0) !== answer.charAt(0)
+    && currentValue.charAt(1) !== answer.charAt(1)
+    && currentValue.charAt(2) !== answer.charAt(2))
+    ){
         ball = '3 ball';
     }
     else if(
-    (currentValue.includes(answer.charAt(0))
-    && currentValue.includes(answer.charAt(1)))
-    || (currentValue.includes(answer.charAt(0))
-    && currentValue.includes(answer.charAt(2)))
-    || (currentValue.includes(answer.charAt(1))
-    && currentValue.includes(answer.charAt(2)))
+    (answer.includes(currentValue.charAt(0))
+    && answer.includes(currentValue.charAt(1))
+    && (currentValue.charAt(0) !== answer.charAt(0)
+    || currentValue.charAt(1) !== answer.charAt(1))) //2 ball
+    ||(answer.includes(currentValue.charAt(0))
+    && answer.includes(currentValue.charAt(2))
+    && (currentValue.charAt(0) !== answer.charAt(0)
+    || currentValue.charAt(2) !== answer.charAt(2)))
+    ||(answer.includes(currentValue.charAt(1))
+    && answer.includes(currentValue.charAt(2))
+    && (currentValue.charAt(1) !== answer.charAt(1)
+    || currentValue.charAt(2) !== answer.charAt(2)))
     ) {
         ball = '2 ball';
     }
-    else if(currentValue.includes(answer.charAt(0))
-    || currentValue.includes(answer.charAt(1))
-    || currentValue.includes(answer.charAt(2))){
+    else if(
+    (answer.includes(currentValue.charAt(0))
+    && currentValue.charAt(0) !== answer.charAt(0))
+    || (answer.includes(currentValue.charAt(1))
+    && currentValue.charAt(1) !== answer.charAt(1))
+    || (answer.includes(currentValue.charAt(2))
+    && currentValue.charAt(2) !== answer.charAt(2))
+    ){
         ball = '1 ball';
     }
     else {
@@ -95,9 +112,10 @@ function paintballStrike(){
 }
 
 function countSubmit(){
-    if ( counter >= 10){
+    if ( counter > 10){
         alert("입력 횟수를 초과하였습니다.");
-        startBtn.innerText = 'ReStart';
+        ballStrike.innerText = 'Game Over'
+        startBtn.innerText = 'Restart';
         startBtn.addEventListener("click", Restart);
     }
     else {
@@ -106,8 +124,8 @@ function countSubmit(){
 }
 
 function Restart(){
-    ballStrike.innerText = '';
     startBtn.innerText = 'Game Start';
+    ballStrike.innerText = '🟡🟡🟡';
     input.value = '';
     counter = 0;
 }
