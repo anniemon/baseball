@@ -20,6 +20,7 @@ function generateNumber(){
    }
    console.log(result);
    saveNumber(result);
+   ballStrike.innerText = '❤❤❤';
 }
 
 function comparedigit(currentValue){
