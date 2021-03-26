@@ -94,16 +94,7 @@ function compareNumber(currentValue){
 }
 
 function paintballStrike(){
-    if (strike === '3 strike'
-    && ball === '0 ball'){
-        ballStrike.innerText = `${strike} ${ball} (${submitCounter})`;
-        startBtn.innerText = 'Restart';
-        startBtn.removeEventListener("click", handleClick);
-        startBtn.addEventListener("click", Restart);
-    }
-    else {
-        ballStrike.innerText = `${strike} ${ball} (${submitCounter})`;
-    }
+    ballStrike.innerText = `${strike} ${ball} (${submitCounter})`;
 }
 
 
