@@ -36,3 +36,11 @@ input {
   text-align: center;
   padding: 20px;
 }
+.start,
+.restart {
+  display: none;
+}
+
+.showing {
+  display: block;
+}

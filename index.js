@@ -1,27 +1,14 @@
-const startBtn = document.querySelector("button"),
+const startBtn = document.querySelector(".start"),
+    restartBtn = document.querySelector(".restart"),
     form = document.querySelector(".js-numberForm"),
     input = form.querySelector("input"),
     ballStrike = document.querySelector(".js-ballStrike");
 
-const ANSWER_LS = "answer";
+const ANSWER_LS = "answer",
+    SHOWING_ON = "showing";
 let strike = '';
 let ball = '';
 let submitCounter = 0;
-let clickCounter = 0;
-
-function saveNumber(text){
-    localStorage.setItem(ANSWER_LS, text);
-}
-
-function generateNumber(){
-    let result = '';
-   for (var i=0; i<3; i++){
-       result += Math.floor(Math.random()*10);
-   }
-   console.log(result);
-   saveNumber(result);
-   ballStrike.innerText = '❤❤❤';
-}
 
 function comparedigit(currentValue){
     const answer = localStorage.getItem(ANSWER_LS);
@@ -97,68 +84,80 @@ function paintballStrike(){
     ballStrike.innerText = `${strike} ${ball} (${submitCounter})`;
 }
 
+function restart(){
+    generateNumber();
+    restartBtn.classList.remove(SHOWING_ON);
+    startBtn.classList.add(SHOWING_ON);
+    input.value = '';
+    submitCounter = 0;
+}
+
+function saveNumber(text){
+    localStorage.setItem(ANSWER_LS, text);
+}
+
+function generateNumber(){
+    let result = '';
+   for (var i=0; i<3; i++){
+       result += Math.floor(Math.random()*10);
+   }
+   console.log(result);
+   saveNumber(result);
+   ballStrike.innerText = '❤❤❤';
+}
 
 function handleClick(){
-    clickCounter +=1;
-    const pseudosubmittedvalue = input.value;
-    if ((pseudosubmittedvalue.length ===3
-        && clickCounter >=1 && submitCounter ===0)
-        || (pseudosubmittedvalue.length ===3
-        && localStorage.getItem(ANSWER_LS) === null)){
-        submitCounter += 1;
-        generateNumber();
-        comparedigit(pseudosubmittedvalue);
-        compareNumber(pseudosubmittedvalue);
-        paintballStrike();
-    }
-    else if (10 >= submitCounter && submitCounter > 0) {
-        startBtn.removeEventListener("click", generateNumber);
-    }
-    else if (submitCounter > 10){
-        Restart();
-    }
-    else {
-        generateNumber();
+    generateNumber();
+    if (10 > submitCounter && submitCounter >=0){
+    startBtn.removeEventListener("click", handleClick);
     }
 }
 
 function handleSubmit (event){
     event.preventDefault();
     const currentValue = input.value;
-    if (clickCounter === 0
-        && submitCounter <= 1) {
-        alert ("시작 버튼을 클릭하세요.");
-    }
-    else if (currentValue.length !== 3){
+    if (currentValue.length !== 3){
         alert("세 자릿수를 입력하세요.");
     }
     else if (10 > submitCounter && submitCounter >=0){
         submitCounter += 1;
         comparedigit(currentValue);
         compareNumber(currentValue);
-        paintballStrike();
+        if (strike === '3 strike' && ball === '0 ball'){
+            paintballStrike();
+            startBtn.classList.remove(SHOWING_ON);
+            restartBtn.classList.add(SHOWING_ON);
+            restartBtn.addEventListener("click", restart);
+        }
+        else {
+            paintballStrike();
+        }
     }
     else {
         submitCounter += 1;
         alert("입력 횟수를 초과하였습니다.");
-        ballStrike.innerText = 'Game Over'
-        startBtn.innerText = 'Restart';
-        startBtn.addEventListener("click", handleClick);
+        ballStrike.innerText = 'Game Over';
+        startBtn.classList.remove(SHOWING_ON);
+        restartBtn.classList.add(SHOWING_ON);
+        restartBtn.addEventListener("click", restart);
     }
 }
 
-function Restart(){
-    startBtn.innerText = 'Game Start';
-    ballStrike.innerText = '❤❤❤';
-    input.value = '';
-    submitCounter = 0;
-    clickCounter = 1;
-    generateNumber();
+function loadNumber(event){
+    const loadedNumber = localStorage.getItem(ANSWER_LS);
+    if(loadedNumber === null){
+        alert("시작 버튼을 입력하세요.");
+    }
+    else{
+        handleSubmit(event);
+    }
 }
 
 function init (){
     startBtn.addEventListener("click", handleClick);
-    form.addEventListener("submit", handleSubmit);
+    form.addEventListener("submit", loadNumber);
+    startBtn.classList.add(SHOWING_ON);
+    localStorage.removeItem(ANSWER_LS);
 }
 
 init();
