@@ -2,7 +2,8 @@ const startBtn = document.querySelector(".start"),
     restartBtn = document.querySelector(".restart"),
     form = document.querySelector(".js-numberForm"),
     input = form.querySelector("input"),
-    ballStrike = document.querySelector(".js-ballStrike");
+    ballStrike = document.querySelector(".js-ballStrike"),
+    numberList = document.querySelector(".js-numberList");
 
 const ANSWER_LS = "answer",
     SHOWING_ON = "showing";
@@ -79,8 +80,10 @@ function countBall(currentValue){
     }
 }
 
-function paintballStrike(){
-    ballStrike.innerText = `${strike} ${ball} (${submitCounter})`;
+function paintballStrike(number){
+    const li = document.createElement("li");
+    li.innerText = `${submitCounter}. ${strike} ${ball} (${number})`;
+    numberList.appendChild(li);
 }
 
 function restart(){
@@ -89,6 +92,10 @@ function restart(){
     startBtn.classList.add(SHOWING_ON);
     input.value = '';
     submitCounter = 0;
+    let cleanNumber = document.querySelector("li").parentNode;
+    while (cleanNumber.firstChild){
+        cleanNumber.removeChild(cleanNumber.firstChild);
+    }
 }
 
 function saveNumber(text){
@@ -123,13 +130,13 @@ function handleSubmit (event){
         countStrike(currentValue);
         countBall(currentValue);
         if (strike === '3 strike' && ball === '0 ball'){
-            paintballStrike();
+            paintballStrike(currentValue);
             startBtn.classList.remove(SHOWING_ON);
             restartBtn.classList.add(SHOWING_ON);
             restartBtn.addEventListener("click", restart);
         }
         else {
-            paintballStrike();
+            paintballStrike(currentValue);
         }
     }
     else {

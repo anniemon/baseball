@@ -4,27 +4,30 @@ body {
   background-size: cover;
   font-family: "Varela Round", sans-serif;
 }
-
 h1 {
   font-family: "Pacifico", cursive;
   text-align: center;
   font-size: 72px;
+  padding-top: 10px;
+  margin: 0px;
+}
+h2 {
+  padding: 0px;
+  margin: 0px;
+}
+form {
+  padding: 30px;
 }
 section {
-  padding: 50px;
+  text-align: center;
 }
 button {
-  position: absolute;
-  top: 80%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  width: fit-content;
+  margin: auto;
   font-size: 30px;
   cursor: pointer;
   background-color:cornflowerblue;
   border: 2px solid gray;
-}
-form {
-  text-align: center;
 }
 input {
   width: 230px;
@@ -32,15 +35,17 @@ input {
   background-color:transparent;
   text-align: center;
 }
-.js-ballStrike {
-  text-align: center;
-  padding: 20px;
-}
 .start,
 .restart {
   display: none;
 }
-
 .showing {
   display: block;
+}
+ul {
+  list-style: none;
+  padding: 0px;
+}
+li {
+  font-size: 20px;
 }
