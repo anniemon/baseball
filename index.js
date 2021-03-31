@@ -10,8 +10,8 @@ let strike = '';
 let ball = '';
 let submitCounter = 0;
 
-function comparedigit(currentValue){
-    const answer = localStorage.getItem(ANSWER_LS);
+function countStrike(currentValue){
+        const answer = localStorage.getItem(ANSWER_LS);
     if (currentValue.charAt(0) === answer.charAt(0)
     && currentValue.charAt(1) === answer.charAt(1)
     && currentValue.charAt(2) === answer.charAt(2)){
@@ -37,10 +37,9 @@ function comparedigit(currentValue){
     }
 }
 
-function compareNumber(currentValue){
+function countBall(currentValue){
     const answer = localStorage.getItem(ANSWER_LS);
-    if (
-        answer.includes(currentValue.charAt(0))
+    if (answer.includes(currentValue.charAt(0))
     && answer.includes(currentValue.charAt(1))
     && answer.includes(currentValue.charAt(2))
     && (currentValue.charAt(0) !== answer.charAt(0)
@@ -53,15 +52,15 @@ function compareNumber(currentValue){
     (answer.includes(currentValue.charAt(0))
     && answer.includes(currentValue.charAt(1))
     && (currentValue.charAt(0) !== answer.charAt(0)
-    || currentValue.charAt(1) !== answer.charAt(1))) //2 ball
+    && currentValue.charAt(1) !== answer.charAt(1))) //2 ball
     ||(answer.includes(currentValue.charAt(0))
     && answer.includes(currentValue.charAt(2))
     && (currentValue.charAt(0) !== answer.charAt(0)
-    || currentValue.charAt(2) !== answer.charAt(2)))
+    && currentValue.charAt(2) !== answer.charAt(2)))
     ||(answer.includes(currentValue.charAt(1))
     && answer.includes(currentValue.charAt(2))
     && (currentValue.charAt(1) !== answer.charAt(1)
-    || currentValue.charAt(2) !== answer.charAt(2)))
+    && currentValue.charAt(2) !== answer.charAt(2)))
     ) {
         ball = '2 ball';
     }
@@ -121,8 +120,8 @@ function handleSubmit (event){
     }
     else if (10 > submitCounter && submitCounter >=0){
         submitCounter += 1;
-        comparedigit(currentValue);
-        compareNumber(currentValue);
+        countStrike(currentValue);
+        countBall(currentValue);
         if (strike === '3 strike' && ball === '0 ball'){
             paintballStrike();
             startBtn.classList.remove(SHOWING_ON);
