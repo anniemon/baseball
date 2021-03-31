@@ -152,7 +152,7 @@ function handleSubmit (event){
 function loadNumber(event){
     const loadedNumber = localStorage.getItem(ANSWER_LS);
     if(loadedNumber === null){
-        alert("시작 버튼을 입력하세요.");
+        alert("시작 버튼을 클릭하세요.");
     }
     else{
         handleSubmit(event);
