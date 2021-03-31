@@ -126,6 +126,7 @@ function handleSubmit (event){
         alert("세 자릿수를 입력하세요.");
     }
     else if (10 > submitCounter && submitCounter >=0){
+        input.value = '';
         submitCounter += 1;
         countStrike(currentValue);
         countBall(currentValue);
@@ -136,10 +137,12 @@ function handleSubmit (event){
             restartBtn.addEventListener("click", restart);
         }
         else {
+            input.value = '';
             paintballStrike(currentValue);
         }
     }
     else {
+        input.value = '';
         submitCounter += 1;
         alert("입력 횟수를 초과하였습니다.");
         ballStrike.innerText = 'Game Over';
