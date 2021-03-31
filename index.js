@@ -130,25 +130,20 @@ function handleSubmit (event){
         submitCounter += 1;
         countStrike(currentValue);
         countBall(currentValue);
-        if (strike === '3 strike' && ball === '0 ball'){
+        if ((strike === '3 strike' && ball === '0 ball')
+        || submitCounter === 10){
             paintballStrike(currentValue);
             startBtn.classList.remove(SHOWING_ON);
             restartBtn.classList.add(SHOWING_ON);
             restartBtn.addEventListener("click", restart);
         }
         else {
-            input.value = '';
             paintballStrike(currentValue);
         }
     }
     else {
         input.value = '';
-        submitCounter += 1;
         alert("입력 횟수를 초과하였습니다.");
-        ballStrike.innerText = 'Game Over';
-        startBtn.classList.remove(SHOWING_ON);
-        restartBtn.classList.add(SHOWING_ON);
-        restartBtn.addEventListener("click", restart);
     }
 }
 
