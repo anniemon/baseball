@@ -96,6 +96,8 @@ function restart(){
     while (cleanNumber.firstChild){
         cleanNumber.removeChild(cleanNumber.firstChild);
     }
+    strike = '';
+    ball = '';
 }
 
 function saveNumber(text){
@@ -122,7 +124,14 @@ function handleClick(){
 function handleSubmit (event){
     event.preventDefault();
     const currentValue = input.value;
-    if (currentValue.length !== 3){
+    if (submitCounter >= 10){
+            input.value = '';
+            alert("입력 횟수를 초과하였습니다.");
+    }
+    else if(strike === '3 strike' && ball === '0 ball'){
+        input.value = '';
+    }
+    else if (currentValue.length !== 3){
         alert("세 자릿수를 입력하세요.");
     }
     else if (10 > submitCounter && submitCounter >=0){
@@ -132,6 +141,8 @@ function handleSubmit (event){
         countBall(currentValue);
         if ((strike === '3 strike' && ball === '0 ball')
         || submitCounter === 10){
+            const answer = localStorage.getItem(ANSWER_LS);
+            ballStrike.innerText = answer;
             paintballStrike(currentValue);
             startBtn.classList.remove(SHOWING_ON);
             restartBtn.classList.add(SHOWING_ON);
@@ -140,10 +151,6 @@ function handleSubmit (event){
         else {
             paintballStrike(currentValue);
         }
-    }
-    else {
-        input.value = '';
-        alert("입력 횟수를 초과하였습니다.");
     }
 }
 
